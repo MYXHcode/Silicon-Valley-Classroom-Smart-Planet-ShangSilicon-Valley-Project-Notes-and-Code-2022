@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myxh.smart.planet.live.mapper.LiveCourseMapper">
+    <resultMap id="liveCourseMap" type="com.myxh.smart.planet.vo.live.LiveCourseVo" autoMapping="true">
+    </resultMap>
+
+    <!-- 用于 select 查询公用抽取的列 -->
+    <sql id="columns">
+        id, course_id, course_name, start_time, end_time, teacher_id, cover, create_time, update_time, is_deleted
+    </sql>
+
+    <select id="findLatelyList" resultMap="liveCourseMap">
+        SELECT
+        <include refid="columns"/>
+        FROM `live_course`
+        WHERE DATE(start_time) >= CURDATE()
+        ORDER BY id
+        LIMIT 5
+    </select>
+</mapper>
